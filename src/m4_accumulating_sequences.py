@@ -23,7 +23,7 @@ def main():
 def run_test_make_simple_list():
     """ Tests the   make_simple_list    function. """
     # ------------------------------------------------------------------
-    # TODO: 2. Implement this TEST function.
+    # TO DO: 2. Implement this TEST function.
     #   It TESTS the  make_simple_list  function defined below.
     #   Include at least **   2   ** tests.
     #
@@ -40,7 +40,17 @@ def run_test_make_simple_list():
     print('Expected:', expected)
     print('Actual:  ', actual)
 
-    # Test 2 (add your test here):
+    # Test 2:
+    expected = [11, 12, 13]
+    actual = make_simple_list(11, 13)
+    print('Expected:', expected)
+    print('Actual:  ', actual)
+
+    # Test 3:
+    expected = [-2, -1, 0, 1, 2, 3, 4, 5]
+    actual = make_simple_list(-2, 5)
+    print('Expected:', expected)
+    print('Actual:  ', actual)
 
 
 def make_simple_list(m, n):
@@ -62,15 +72,16 @@ def make_simple_list(m, n):
       :type n: int
     """
     # ------------------------------------------------------------------
-    # TODO: 3. Implement and test this function.
+    # TO DO: 3. Implement and test this function.
     #   Note that you should write its TEST function first (above).
     # ------------------------------------------------------------------
+    return list(range(m, n + 1))
 
 
 def run_test_make_simple_string():
     """ Tests the   make_simple_string    function. """
     # ------------------------------------------------------------------
-    # TODO: 4. Implement this TEST function.
+    # TO DO: 4. Implement this TEST function.
     #   It TESTS the  make_simple_string  function defined below.
     #   Include at least **   2   ** tests.
     #
@@ -80,6 +91,18 @@ def run_test_make_simple_string():
     print('--------------------------------------------------')
     print('Testing the   make_simple_string   function:')
     print('--------------------------------------------------')
+
+    # Test 2:
+    expected = '11-12-13-'
+    actual = make_simple_string(11, 13)
+    print('Expected:', expected)
+    print('Actual:  ', actual)
+
+    # Test 3:
+    expected = '-2--1-0-1-2-3-4-5-'
+    actual = make_simple_string(-2, 5)
+    print('Expected:', expected)
+    print('Actual:  ', actual)
 
 
 def make_simple_string(m, n):
@@ -103,15 +126,16 @@ def make_simple_string(m, n):
       :type n: int
     """
     # ------------------------------------------------------------------
-    # TODO: 5. Implement and test this function.
+    # TO DO: 5. Implement and test this function.
     #   Note that you should write its TEST function first (above).
     # ------------------------------------------------------------------
+    return make_less_simple_string(m, n) + "-"
 
 
 def run_test_make_less_simple_string():
     """ Tests the   make_less_simple_string    function. """
     # ------------------------------------------------------------------
-    # TODO: 6. Implement this TEST function.
+    # TO DO: 6. Implement this TEST function.
     #   It TESTS the  make_less_simple_string  function defined below.
     #   Include at least **   2   ** tests.
     #
@@ -121,6 +145,18 @@ def run_test_make_less_simple_string():
     print('--------------------------------------------------')
     print('Testing the   make_less_simple_string   function:')
     print('--------------------------------------------------')
+
+    # Test 2:
+    expected = '11-12-13'
+    actual = make_less_simple_string(11, 13)
+    print('Expected:', expected)
+    print('Actual:  ', actual)
+
+    # Test 3:
+    expected = '-2--1-0-1-2-3-4-5'
+    actual = make_less_simple_string(-2, 5)
+    print('Expected:', expected)
+    print('Actual:  ', actual)
 
 
 def make_less_simple_string(m, n):
@@ -146,9 +182,10 @@ def make_less_simple_string(m, n):
       :type n: int
     """
     # ------------------------------------------------------------------
-    # TODO: 7. Implement and test this function.
+    # TO DO: 7. Implement and test this function.
     #   Note that you should write its TEST function first (above).
     # -----------------------------------------------------------------
+    return "-".join(str(x) for x in make_simple_list(m, n))
 
 
 def run_test_draw_shapes():
@@ -225,11 +262,11 @@ def draw_shapes(shapes, window):
     Examples:
       See the   draw_shapes.pdf   file in this project.
     Type hints:
-      :type shapes:  list[rg.Shape]    or tuple(rg.Shape)
+      :type shapes:  list[rg._Shape] or tuple[rg._Shape]
       :type window:  rg.RoseWindow
     """
     # ------------------------------------------------------------------
-    # TODO: 8. Implement and test this function.
+    # TO DO: 8. Implement and test this function.
     #     The testing code is already written for you (above).
     #
     ####################################################################
@@ -240,6 +277,9 @@ def draw_shapes(shapes, window):
     # FWIW: The word for ideas like this is "polymorphism".
     ####################################################################
     # ------------------------------------------------------------------
+    for shape in shapes:
+        shape.attach_to(window)
+        window.render(0.3)
 
 
 def run_test_rectangles_from_circles():
@@ -332,16 +372,16 @@ def rectangles_from_circles(circles):
     What comes in:
       -- a sequence of rg.Circle objects
     What goes out:
-      Returns a list of rg.Rectangles, where each rg.Rectangle
-      circumscribes its corresponding rg.Circle in the given list
-      of rg.Circles.
+      Returns a list of rg.Rectangles, where each rg.Rectangle circumscribes
+      its corresponding rg.Circle in the given list of rg.Circles.
     Side effects: None.
     Examples: See   rectangles_from_circles.pdf   in this project.
     Type hints:
-      :type circles:  list[rg.Circle]    or tuple(rg.Circle)
+      :type circles:  list of rg.Circle or tuple of rg.Circle
+      :rtype: list of rg.Rectangles
     """
     # ------------------------------------------------------------------
-    # TODO: 9. Implement and test this function.
+    # TO DO: 9. Implement and test this function.
     #     The testing code is already written for you (above).
     #
     ####################################################################
@@ -352,7 +392,15 @@ def rectangles_from_circles(circles):
     #            in this function, so DON'T draw anything in here!
     ####################################################################
     # ------------------------------------------------------------------
-
+    rectangles = []
+    for circle in circles:
+        top = circle.center.y - circle.radius
+        left = circle.center.x - circle.radius
+        bottom = circle.center.y + circle.radius
+        right = circle.center.x + circle.radius
+        r = rg.Rectangle(rg.Point(left, top), rg.Point(right, bottom))
+        rectangles += [r]
+    return rectangles
 
 # ----------------------------------------------------------------------
 # Calls  main  to start the ball rolling.
